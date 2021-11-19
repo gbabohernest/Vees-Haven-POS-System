@@ -1,14 +1,17 @@
 <?php
+// we insert the record into the db
+
 
 include("../db_connection.php");
 //here we want to check before inserting the category into the db
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     //prepare the sql stmt
-    $stmt = $conn->prepare("insert into category(catname, status) values (?,?)");
-    $stmt-> bind_param("ss", $catname, $status);
+    $stmt = $conn->prepare("INSERT INTO category (catname, status)values (?,?);");
+    $stmt->bind_param("ss", $catname, $status );
 
-    $catname = $_POST['catname'];
+
+    $catname= $_POST['catname'];
     $status = $_POST['status'];
 
     if($stmt->execute())

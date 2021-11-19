@@ -19,16 +19,16 @@
     <title>Vee's Haven</title>
 </head>
 <body>
-    <?php include ("../header.php")?>
+<?php include ("../header.php")?>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4 ">
-            <form id="form-category" class="form-horizontal">
+            <form id="form-brand" class="form-horizontal">
                 <!--                <h4 align="center">CREATE CATEGORY</h4>-->
                 <div class="form-group">
-                    <label for="catname">Category</label>
-                    <input type="text" id="catname" class="form-control" name="catname" placeholder="Category"
+                    <label for="brandname">Brand</label>
+                    <input type="text" id="brandname" class="form-control" name="brandname" placeholder="Brand"
                            required>
                 </div>
 
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="mt-2" align="right">
-                    <button type="button" class="btn btn-primary" id="save" name="catname" onclick="addCategory()">Add
+                    <button type="button" class="btn btn-primary" id="save"  onclick="addBrand()">Add
                     </button>
                     <button type="button" class="btn btn-danger" id="reset">Reset</button>
                 </div>
@@ -56,7 +56,7 @@
             <!--           <h4 align='center'>LIST OF CATEGORY</h4>-->
             <div class="panel-body">
                 <table class="table table-responsive table-bordered" cellspacing="0" width="100%"
-                       id="table-category">
+                       id="table-brand">
                     <tr>
                         <th></th>
                         <th></th>
@@ -94,28 +94,22 @@
     displayDataInTable();
     let categoryID = null;
 
-    // $('#reset').on('click', function(){
-    //     this.clear();
-    //     // alert('hey');
-    // });
 
-
-
-    function addCategory() {
-        if ($("#form-category").valid()) {
+    function addBrand() {
+        if ($("#form-brand").valid()) {
             let _url = "";
             let _data = "";
             let _method;
 
             if (isNew === true) {
-                _url = '../php/add_category.php';
-                _data = $("#form-category").serialize();
+                _url = '../php/add_brand.php';
+                _data = $("#form-brand").serialize();
                 _method = "POST";
 
             } else {
                 //update the edited category
-                _url = '../php/update_category.php';
-                _data = $("#form-category").serialize() + "& categoryID=" + categoryID;
+                _url = '../php/update_brand.php';
+                _data = $("#form-brand").serialize() + "& brandID=" + brandID;
                 _method = "POST";
             }
 
@@ -131,9 +125,9 @@
                     let msg;
 
                     if (isNew) {
-                        msg = "Category Created"
+                        msg = "Brand Created"
                     } else {
-                        msg = "Category Updated"
+                        msg = "Brand Updated"
                     }
 
                     $.alert({
@@ -168,21 +162,21 @@
     } //    end of add category fun
 
 
-    function displayDataInTable() {
+    function displayBrandDataInTable() {
         // $('#table-category').dataTable().fnDestroy();
         $.ajax({
-            url: "../php/all_category.php",
+            url: "../php/all_brand.php",
             type: "GET",
             dataType: "JSON",
 
 
             success: function (data) {
 
-                $('#table-category').dataTable({
+                $('#table-brand').dataTable({
                     "aaData": data,
                     "scrollX": true,
                     "aoColumns": [
-                        {"sTitle": "Category", "mData": "catname"},
+                        {"sTitle": "Brand", "mData": "brandname"},
                         {
                             "sTitle": "Status", "mData": "status", "render": function (mData, type, row, meta) {
                                 if (mData === "active") {
@@ -196,14 +190,14 @@
                             "sTitle": "Edit",
                             "mData": "id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-xs btn-success" onclick="editCategoryDetials(' + mData + ')">Edit</button>';
+                                return '<button class="btn btn-xs btn-success" onclick="editBrandDetials(' + mData + ')">Edit</button>';
                             }
                         },
                         {
                             "sTitle": "Delete",
                             "mData": "id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-xs btn-primary" onclick="deleteCategory (' + mData + ')">Delete</button>';
+                                return '<button class="btn btn-xs btn-primary" onclick="deleteBrand (' + mData + ')">Delete</button>';
                             }
                         }
                     ]

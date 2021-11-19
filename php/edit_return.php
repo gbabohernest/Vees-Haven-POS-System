@@ -4,9 +4,9 @@
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     include ("../db_connection.php");
 
-    $stmt = $conn->prepare('SELECT id,catname,status FROM category WHERE id=?');
-    $category = $_POST['categoryId'];
-    $stmt->bind_param("s", $category);
+    $stmt = $conn->prepare("SELECT id,catname,status FROM category WHERE id=?");
+    $category = $_POST['categoryID'];
+    $stmt->bind_param("s",$category );
 
     $stmt->bind_result($id,$catname,$status);
 
@@ -14,7 +14,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         while($stmt->fetch()){
             $output = array("id"=>$id, "catname"=>$catname, "status"=>$status);
         }
-        echo json_encode($output);
+        echo  json_encode($output);
     }
- $stmt->close();
+
+    $stmt->close();
+
 }
