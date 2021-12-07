@@ -1,89 +1,81 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- bootstrap    -->
-    <link rel="stylesheet" href="../components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../components/bootstrap/dist/css/bootstrap.css">
-    <!-- jquery -->
-    <!--    <link rel="stylesheet" href="../components/jquery-confirm-master/css/jquery-confirm.css">-->
-    <link rel="stylesheet" href="../components/jquery-confirm-v3.3.4/css/jquery-confirm.css">
-    <!--    main css-->
-    <link rel="stylesheet" href="../main.css">
-    <!-- data table -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
-    <link rel="stylesheet" href="../main.css">
-    <title>Vee's Haven</title>
-</head>
-<body>
-<?php include ("../header.php")?>
-
+<?php include("header.php") ?>
+<!--brand-->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4 ">
-            <form id="form-brand" class="form-horizontal">
-                <!--                <h4 align="center">CREATE CATEGORY</h4>-->
-                <div class="form-group">
-                    <label for="brandname">Brand</label>
-                    <input type="text" id="brandname" class="form-control" name="brandname" placeholder="Brand"
-                           required>
+        <!-- add brand  form-->
+        <div class="col-sm-4">
+            <div class="card mt-1 ">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4 class="text-center">Add Brand</h4>
+                    </div>
                 </div>
+                <div class="card-body ">
+                    <form id="form-brand" class="form-group row">
+                        <div class="form-control">
+                            <label for="brandname">Brand</label>
+                            <input type="text" id="brandname" class="form-control" name="brandname" placeholder="Brand"
+                                   required>
+                        </div>
+                        <div class="form-control">
+                            <label for="status">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">Please Select</option>
+                                <option value="active">Active</option>
+                                <option value="de-active">De-Active</option>
+                            </select>
+                        </div>
 
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="">Please Select</option>
-                        <option value="active">Active</option>
-                        <option value="de-active">De-Active</option>
-                    </select>
+                        <div class="mt-3 float-end">
+                            <button type="button" class="btn btn-outline-danger float-end m-2" id="reset">Reset</button>
+                            <button type="button" class="btn btn-outline-primary float-end m-2" id="save" onclick="addBrand()">Add
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="mt-2" align="right">
-                    <button type="button" class="btn btn-primary" id="save"  onclick="addBrand()">Add
-                    </button>
-                    <button type="button" class="btn btn-danger" id="reset">Reset</button>
-                </div>
-            </form>
-
-
-        </div>
-        <!-- add category end -->
+            </div>
+        </div>  <!-- add brand  form end-->
 
         <div class="col-sm-8">
-            <!--           <h4 align='center'>LIST OF CATEGORY</h4>-->
-            <div class="panel-body">
-                <table class="table table-responsive table-bordered" cellspacing="0" width="100%"
-                       id="table-brand">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </table>
+            <div class="card mt-1">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4 class="text-center">Brands</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-responsive table-striped " id="table-brand"
+                           style="width:100%">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-
     </div>
 </div>
-<!--end of category form -->
-
+<!--end of brand-->
 
 <!--scripts links-->
-<script src="../components/jquery/jquery-3.6.0.js"></script>
-<script src="../components/jquery/jquery-3.6.0.min.js"></script>
-<script src="../components/jquery.validate.min.js"></script>
-<script src="../components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="../components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="components/jquery/jquery-3.6.0.js"></script>
+<script src="components/jquery/jquery-3.6.0.min.js"></script>
+<script src="components/jquery.validate.min.js"></script>
+<script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!--<script src="components/bootstrap/dist/js/bootstrap.js"></script>-->
 <!--<script src="../components/jquery-confirm-master/js/jquery-confirm.js"></script>-->
-<script src="../components/jquery-confirm-v3.3.4/js/jquery-confirm.js"></script>
+<script src="components/jquery-confirm-v3.3.4/dist/jquery-confirm.min.js"></script>
 <!-- data table -->
-<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<!--<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>-->
+<script src="components/DataTables/datatables.min.js"></script>
 
-<!--end of scripts links -->
+
+<!-- <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script> -->
 
 
 <!--jquery script-->
@@ -91,8 +83,8 @@
     // $(document).ready(function(){
 
     let isNew = true;
-    displayDataInTable();
-    let categoryID = null;
+    displayBrandDataInTable();
+    let brandID = null;
 
 
     function addBrand() {
@@ -102,13 +94,13 @@
             let _method;
 
             if (isNew === true) {
-                _url = '../php/add_brand.php';
+                _url = '../php/brand/add_brand.php';
                 _data = $("#form-brand").serialize();
                 _method = "POST";
 
             } else {
                 //update the edited category
-                _url = '../php/update_brand.php';
+                _url = '../php/brand/update_brand.php';
                 _data = $("#form-brand").serialize() + "& brandID=" + brandID;
                 _method = "POST";
             }
@@ -121,17 +113,17 @@
 
                 //display success message
                 success: function (data) {
-                    // displayDataInTable();
+                    displayBrandDataInTable();
                     let msg;
 
                     if (isNew) {
-                        msg = "Brand Created"
+                        msg = "<h6 class='fw-bold text-center'>Brand Created</h6>";
                     } else {
-                        msg = "Brand Updated"
+                        msg = "<h6 class='fw-bold text-center'>Brand Updated</h6>";
                     }
 
                     $.alert({
-                        title: 'Success!',
+                        title: '<h4 class="fw-bold">Success!</h4>',
                         content: msg,
                         type: 'green',
                         boxWidth: '400px',
@@ -159,13 +151,14 @@
                 }
             });
         }
-    } //    end of add category fun
+    } //    end of add brand fun
 
 
     function displayBrandDataInTable() {
-        // $('#table-category').dataTable().fnDestroy();
+        let brandTable = $('#table-brand').DataTable()
+        brandTable.clear().draw();
         $.ajax({
-            url: "../php/all_brand.php",
+            url: "../php/brand/all_brand.php",
             type: "GET",
             dataType: "JSON",
 
@@ -173,6 +166,7 @@
             success: function (data) {
 
                 $('#table-brand').dataTable({
+                    "bDestroy": true,
                     "aaData": data,
                     "scrollX": true,
                     "aoColumns": [
@@ -190,14 +184,14 @@
                             "sTitle": "Edit",
                             "mData": "id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-xs btn-success" onclick="editBrandDetials(' + mData + ')">Edit</button>';
+                                return '<button class="btn btn-sm btn-primary" onclick="editBrandDetials(' + mData + ')">Edit</button>';
                             }
                         },
                         {
                             "sTitle": "Delete",
                             "mData": "id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-xs btn-primary" onclick="deleteBrand (' + mData + ')">Delete</button>';
+                                return '<button class="btn btn-sm btn-danger" onclick="deleteBrand (' + mData + ')">Delete</button>';
                             }
                         }
                     ]
@@ -221,24 +215,24 @@
                 $('#save').append('Save');
             }
         });
-    } //displayDataInTable function end
+    } //displayBrandDataInTable function end
 
 
     //    edit function
-    function editCategoryDetials(id) {
+    function editBrandDetials(id) {
         $.ajax({
             type: "POST",
-            url: "../php/edit_return.php",
+            url: "../php/brand/editBrand_return.php",
             dataType: "JSON",
-            data: {categoryID: id},
+            data: {brandID: id},
 
             success: function (data) {
                 $("html, body").animate({scrollTop: 0}, "slow");
                 isNew = false
                 // console.log(data);
 
-                categoryID = data.id
-                $('#catname').val(data.catname);
+                brandID = data.id
+                $('#brandname').val(data.brandname);
 
                 $('#status').val(data.status);
 
@@ -257,22 +251,33 @@
                 });
             }
         });
-    } //editCategoryDetials function end
+    } //editBrandDetials function end
 
 
-    function deleteCategory(id) {
+    function deleteBrand(id) {
         $.confirm({
             theme: 'supervan',
             buttons: {
                 Yes: function () {
                     $.ajax({
                         type: "POST",
-                        url: "../php/delete_category.php",
+                        url: "../php/brand/delete_brand.php",
                         dataType: "JSON",
-                        data: {categoryID: id},
+                        data: {brandID: id},
 
                         success: function (data) {
-                            // displayDataInTable();
+                            displayBrandDataInTable();
+                            let deletemsg = "Brand Deleted";
+
+                            $.alert({
+                                title: 'Success!',
+                                content: deletemsg,
+                                type: 'green',
+                                boxWidth: '400px',
+                                theme: 'light',
+                                useBootstrap: false,
+                                autoClose: 'ok|2000'
+                            });
                         },
 
                         error: function (xhr, status, error) {
@@ -287,8 +292,6 @@
 
                             });
                         }
-
-
                     });
                 },
                 No: function () {
@@ -296,12 +299,7 @@
                 }
             }
         });
-    } //deleteCategory end
-
-
-    // }); //document.ready function end
-
-
+    } //deleteBrand end
 </script>
 </body>
 </html>

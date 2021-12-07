@@ -1,68 +1,97 @@
 <?php include("header.php") ?>
-
+<!--new vendor -->
 <div class="container-fluid">
     <div class="row">
-        <!-- add category form-->
-        <div class="col-sm-4">
+        <!-- add vendor -->
+        <div class="col-sm-12">
             <div class="card mt-1 ">
                 <div class="card-header">
                     <div class="card-title">
-                        <h4 class="text-center">Add Category</h4>
+                        <h4 class="text-center">Add Vendor</h4>
                     </div>
                 </div>
                 <div class="card-body ">
-                    <form id="form-category" class="form-group row" >
-                        <div class="form-control">
-                            <label for="catname">Category</label>
-                            <input type="text" id="catname" class="form-control" name="catname" placeholder="Category"
-                                   required>
-                        </div>
-                        <div class="form-control">
-                            <label for="status">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="">Please Select</option>
-                                <option value="active">Active</option>
-                                <option value="de-active">De-Active</option>
-                            </select>
+                    <form id="form-vendor" >
+                        <div class="form-row">
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label for="vendor_name">Vendor Name</label>
+                                    <input type="text" id="vendor_name" class="form-control" name="vendor_name"
+                                           placeholder="vendor name"
+                                           required>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="contact_no">Contact No</label>
+                                    <input type="text" id="contact_no" class="form-control" name="contact_no"
+                                           placeholder="contact number"
+                                           required>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="email">Email</label>
+                                    <input type="text" id="email" class="form-control" name="email"
+                                           placeholder="email"
+                                           required>
+                                </div>
+                            </div> <!--first row end-->
+                            <br>
+
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" class="form-control"
+                                           name="address" placeholder="address"
+                                           required>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="status">Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="active">Active</option>
+                                        <option value="de-active">De-Active</option>
+                                    </select>
+                                </div>
+                            </div> <!--second row end-->
                         </div>
 
                         <div class="mt-3 float-end">
-                            <button type="button" class="btn btn-outline-danger float-end m-2" id="reset">Reset</button>
-                            <button type="button" class="btn btn-outline-primary float-end m-2" id="save" name="catname" onclick="addCategory()">Add
+                            <button type="button" class="btn btn-outline-primary" id="save" onclick="addVendor()">Add
                             </button>
+                            <button type="button" class="btn btn-outline-danger"   id="reset">Reset</button>
                         </div>
                     </form>
-
-                </div>
-            </div>
-        </div>  <!-- add category  form end-->
-
-        <div class="col-sm-8">
-            <div class="card mt-1">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h4 class="text-center">Categories</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-
-                    <table class="table table-bordered table-responsive table-striped "   id="table-category" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--category end-->
+<!--new vendor ends-->
 
+<!--vendor table-->
+<  <div class="col-sm-12">
+    <div class="card mt-1">
+        <div class="card-header">
+            <div class="card-title">
+                <h4 class="text-center">All Vendors</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-responsive table-striped " id="table-vendor" style="width:100%">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<!--vendor table end-->
 
 <!--scripts links-->
 <script src="components/jquery/jquery-3.6.0.js"></script>
@@ -81,28 +110,30 @@
 
 <!--end of scripts links -->
 
-
 <!--jquery script-->
 <script>
-    let isNew = true;
-    displayDataInTable();
-    let categoryID = null;
 
-    function addCategory() {
-        if ($("#form-category").valid()) {
+    let isNew = true;
+    displayVendorDataInTable();
+    let vendorID = null;
+
+
+    function addVendor() {
+        if ($("#form-vendor").valid()) {
             let _url = "";
             let _data = "";
             let _method;
 
             if (isNew === true) {
-                _url = '../php/category/add_category.php';
-                _data = $("#form-category").serialize();
+                _url = '../php/vendor/add_vendor.php';
+                _data = $("#form-vendor").serialize();
                 _method = "POST";
 
-            } else {
+            }
+            else {
                 //update the edited category
-                _url = '../php/category/update_category.php';
-                _data = $("#form-category").serialize() + "& categoryID=" + categoryID;
+                _url = '../php/vendor/update_vendor.php';
+                _data = $("#form-vendor").serialize() + "& vendorID=" + vendorID;
                 _method = "POST";
             }
 
@@ -114,25 +145,26 @@
 
                 //display success message
                 success: function (data) {
+                    displayVendorDataInTable();
                     let msg;
-                    displayDataInTable();
+
                     if (isNew) {
-                        msg = "<h6 class='fw-bold text-center'>Category Created</h6>";
-                    } else {
-                        msg = "<h6 class='fw-bold text-center'>Category Updated</h6>";
+                        msg = "<h6 class='text-center fw-bold'> Vendor Created</h6>"
+                    } 
+                    else {
+                        msg = "<h6 class='text-center fw-bold'>Vendor Updated</h6>"
                     }
 
                     $.alert({
-                        title: '<h4 class="fw-bold">Success!</h4>',
+                        title: '<h4 class="fw-bold ">Success!</h4>',
                         content: msg,
                         type: 'green',
                         boxWidth: '400px',
                         theme: 'light',
-                        useBootstrap: false,
+                        useBootstrap: true,
                         autoClose: 'ok|2000'
                     });
                     // isNew = true;
-
                 },
 
                 //display error message
@@ -152,27 +184,32 @@
                 }
             });
         }
-    } //    end of add category fun
+    } //    end of add vendor fun
 
 
-    function displayDataInTable() {
-        // $('#table-category').DataTable().fnDestroy();
-        let categoryTable = $('#table-category').DataTable()
-        categoryTable.clear().draw();
+    function displayVendorDataInTable() {
+        let vendorTable = $('#table-vendor').DataTable()
+        vendorTable.clear().draw();
         $.ajax({
-            url: "../php/category/all_category.php",
+            url: "../php/vendor/all_vendor.php",
             type: "GET",
             dataType: "JSON",
 
 
             success: function (data) {
 
-                $('#table-category').DataTable({
-                     "bDestroy": true,
+                $('#table-vendor').dataTable({
+                    "bDestroy": true,
                     "aaData": data,
                     "scrollX": true,
+                    "scrollY": true,
+
                     "aoColumns": [
-                        {"sTitle": "Category", "mData": "catname"},
+                        {"sTitle": "Vendor Name", "mData": "vendor_name"},
+                        {"sTitle": "Contact ", "mData": "contact_no"},
+                        {"sTitle": "Email", "mData": "email"},
+                        {"sTitle": "Address", "mData": "address"},
+
                         {
                             "sTitle": "Status", "mData": "status", "render": function (mData, type, row, meta) {
                                 if (mData === "active") {
@@ -184,16 +221,16 @@
                         },
                         {
                             "sTitle": "Edit",
-                            "mData": "id",
+                            "mData": "vendor_id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-sm btn-primary" onclick="editCategoryDetials(' + mData + ')">Edit</button>';
+                                return '<button class="btn btn-xs btn-primary" onclick="editVendorDetails(' + mData + ')">Edit</button>';
                             }
                         },
                         {
                             "sTitle": "Delete",
-                            "mData": "id",
+                            "mData": "vendor_id",
                             "render": function (mData, type, row, meta) {
-                                return '<button class="btn btn-sm btn-danger" onclick="deleteCategory (' + mData + ')">Delete</button>';
+                                return '<button class="btn btn-xs btn-danger" onclick="deleteVendor(' + mData + ')">Delete</button>';
                             }
                         }
                     ]
@@ -217,25 +254,27 @@
                 $('#save').append('Save');
             }
         });
-    } //displayDataInTable function end
+    } //displayVendorDataInTable function end
 
 
     //    edit function
-    function editCategoryDetials(id) {
+    function editVendorDetails(id) {
         $.ajax({
             type: "POST",
-            url: "../php/category/edit_return.php",
+            url: "../php/vendor/editVendor_return.php",
             dataType: "JSON",
-            data: {categoryID: id},
+            data: {vendorID: id},
 
             success: function (data) {
                 $("html, body").animate({scrollTop: 0}, "slow");
                 isNew = false
                 // console.log(data);
 
-                categoryID = data.id
-                $('#catname').val(data.catname);
-
+                vendorID = data.id
+                $('#vendor_name').val(data.vendor_name);
+                $('#contact_no').val(data.contact_no);
+                $('#email').val(data.email);
+                $('#address').val(data.address);
                 $('#status').val(data.status);
 
             },
@@ -253,22 +292,23 @@
                 });
             }
         });
-    } //editCategoryDetials function end
+    } //editVendorDetails function end
 
 
-    function deleteCategory(id) {
+
+    function deleteVendor(id) {
         $.confirm({
             theme: 'supervan',
             buttons: {
                 Yes: function () {
                     $.ajax({
                         type: "POST",
-                        url: "../php/category/delete_category.php",
+                        url: "../php/vendor/delete_vendor.php",
                         dataType: "JSON",
-                        data: {categoryID: id},
+                        data: {vendorID: id},
 
                         success: function (data) {
-                            displayDataInTable();
+                            displayVendorDataInTable();
                         },
 
                         error: function (xhr, status, error) {
@@ -284,6 +324,7 @@
                             });
                         }
 
+
                     });
                 },
                 No: function () {
@@ -291,7 +332,7 @@
                 }
             }
         });
-    } //deleteCategory end
+    } //deleteVendor end
 
 </script>
 </body>

@@ -2,7 +2,8 @@
 //this will fetch the data (category) the user wants to edit base on the id.
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    include ("../db_connection.php");
+    
+    include("../db_connection.php");
 
     $stmt = $conn->prepare("SELECT id,catname,status FROM category WHERE id=?");
     $category = $_POST['categoryID'];

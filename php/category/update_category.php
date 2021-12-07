@@ -3,7 +3,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    include ('../db_connection.php');
+    include('../db_connection.php');
 
     $stmt = $conn->prepare("UPDATE category SET catname=?,status=? WHERE id=?");
     $stmt->bind_param("sss", $catname,$status,$categoryID);
